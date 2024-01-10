@@ -1,0 +1,14 @@
+FROM node:20-alpine
+
+WORKDIR /home/checkered/apps/server
+
+COPY package.json .
+COPY --from=monorepo package.json package-lock.json /home/checkered/
+COPY --from=monorepo apps/ /home/checkered/apps/
+# COPY --from=monorepo packages/ /home/checkered/packages/
+
+RUN npm ci
+
+EXPOSE 3000
+
+ENTRYPOINT ["npm", "run", "dev"]
