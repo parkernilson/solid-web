@@ -5,8 +5,8 @@ services:
       context: ./apps/pocketbase
       args: 
         - VERSION=0.19.4
-    image: checkered-pocketbase-dev
-    container_name: checkered-pocketbase-dev
+    image: solid-pocketbase-dev
+    container_name: solid-pocketbase-dev
     restart: unless-stopped
     # command: --debug
     ports:
@@ -25,12 +25,12 @@ services:
       dockerfile: Dockerfile.dev
       additional_contexts:
         monorepo: ./
-    image: checkered-server-dev
+    image: solid-server-dev
     volumes:
       - type: bind
         source: ./apps/server
-        target: /home/checkered/apps/server
-    container_name: checkered-server-dev
+        target: /home/solid/apps/server
+    container_name: solid-server-dev
     restart: unless-stopped
     ports:
       - "3000:3000"

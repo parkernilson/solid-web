@@ -1,5 +1,5 @@
 {
-  "name": "@checkered/server",
+  "name": "@solid/server",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",

@@ -1,11 +1,11 @@
 FROM node:20-alpine
 
-WORKDIR /home/checkered/apps/server
+WORKDIR /home/solid/apps/server
 
 COPY package.json .
-COPY --from=monorepo package.json package-lock.json /home/checkered/
-COPY --from=monorepo apps/ /home/checkered/apps/
-# COPY --from=monorepo packages/ /home/checkered/packages/
+COPY --from=monorepo package.json package-lock.json /home/solid/
+COPY --from=monorepo apps/ /home/solid/apps/
+# COPY --from=monorepo packages/ /home/solid/packages/
 
 RUN npm ci
 
