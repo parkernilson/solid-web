@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev:build": "docker compose -f docker-compose.dev.yml build",
 		"dev:up": "docker compose -f docker-compose.dev.yml up",
-		"dev:down": "docker compose -f docker-compose.dev.yml down"
+		"dev:down": "docker compose -f docker-compose.dev.yml down",
+		"dev:local": "bun run --cwd apps/server dev:local"
 	},
 	"workspaces": [
 		"apps/*",

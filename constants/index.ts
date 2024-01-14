@@ -1,0 +1,1 @@
+export const POCKETBASE_SESSION_COOKIE = 'pb-session';
