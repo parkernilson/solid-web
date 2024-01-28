@@ -1,7 +1,9 @@
 import { Calendar } from '@solid/interfaces/calendars'
 import { Request, Response, Router } from 'express'
+import { shareRouter } from './share' 
 
 const calendarRouter = Router()
+calendarRouter.use('/share', shareRouter)
 
 calendarRouter.put('/', async (req: Request, res: Response) => {
     const { calendarService } = req
