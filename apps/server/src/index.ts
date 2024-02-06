@@ -2,8 +2,8 @@ import express, { Express, NextFunction, Request, RequestHandler, Response } fro
 import dotenv from "dotenv";
 import Client from 'pocketbase'
 import bodyParser from "body-parser";
-import { CalendarService, EntryService, EmailService } from "./services";
-import { calendarRouter, entryRouter, authRouter } from "./routers";
+import { GoalService, EntryService, EmailService } from "./services";
+import { goalRouter, entryRouter, authRouter } from "./routers";
 import { SESv2Client } from "@aws-sdk/client-sesv2";
 
 dotenv.config();
@@ -24,11 +24,11 @@ const setup: RequestHandler = async (req: Request, res: Response, next: NextFunc
   req.adminPb = new Client(`${POCKETBASE_URL}:8090`)
   await req.adminPb.admins.authWithPassword(PB_ADMIN_EMAIL, PB_ADMIN_PASSWORD) 
 
-  req.calendarService = new CalendarService(req.pb)
+  req.goalService = new GoalService(req.pb)
   req.entryService = new EntryService(req.pb)
 
   req.admin = {
-    calendarService: new CalendarService(req.adminPb),
+    goalService: new GoalService(req.adminPb),
     entryService: new EntryService(req.adminPb)
   }
 
@@ -68,7 +68,7 @@ const setup: RequestHandler = async (req: Request, res: Response, next: NextFunc
 app.use(setup)
 
 app.use('/api/auth', authRouter)
-app.use('/api/calendars', calendarRouter)
+app.use('/api/goals', goalRouter)
 app.use('/api/entries', entryRouter)
 
 app.all('*', (req: Request, res: Response) => {

@@ -1,9 +1,9 @@
 import Client from 'pocketbase'
-import type { Entry, EntryRecord } from '@solid/interfaces/calendars'
+import type { Entry, EntryRecord } from '@solid/interfaces/goals'
 
 export type ListOptions = {
     limit?: number,
-    calendar?: string
+    goal?: string
 }
 
 export class EntryService {
@@ -21,8 +21,8 @@ export class EntryService {
         return this.pb.collection('entries').getOne<EntryRecord>(id)
     }
 
-    async getList({ limit, calendar }: ListOptions) {
-        return this.pb.collection('entries').getList<EntryRecord>(0, limit, { filter: `calendar = '${calendar}'` })
+    async getList({ limit, goal }: ListOptions) {
+        return this.pb.collection('entries').getList<EntryRecord>(0, limit, { filter: `goal = '${goal}'` })
     }
 
     async update(id: string, entry: Partial<Entry>) {

@@ -1,26 +1,26 @@
 import Client from "pocketbase";
-import type { Calendar, CalendarRecord } from "@solid/interfaces/calendars";
+import type { Goal, GoalRecord } from "@solid/interfaces/goals";
 import { generateRandomUrlSafeToken } from "@solid/utils";
 
 type ListOptions = {
     limit?: number;
 };
 
-export class CalendarService {
+export class GoalService {
     private pb: Client;
 
     constructor(pb: Client) {
         this.pb = pb;
     }
 
-    async create(calendar: Calendar) {
-        return this.pb.collection("calendars").create<CalendarRecord>(calendar);
+    async create(goal: Goal) {
+        return this.pb.collection("goals").create<GoalRecord>(goal);
     }
 
-    async createShareRequest(calendarId: string, shareWithEmail: string) {
+    async createShareRequest(goalId: string, shareWithEmail: string) {
         const secretKey = generateRandomUrlSafeToken(32);
         return this.pb.collection("share_requests").create({
-            calendar: calendarId,
+            goal: goalId,
             share_with_email: shareWithEmail,
             secret_key: secretKey,
         });
@@ -36,11 +36,11 @@ export class CalendarService {
         if (shareRequest.secret_key !== secretKey)
             throw new Error("Invalid token");
 
-        const calendar = await this.pb
-            .collection("calendars")
-            .getOne(shareRequest.calendar);
+        const goal = await this.pb
+            .collection("goals")
+            .getOne(shareRequest.goal);
 
-        if (!calendar) throw new Error("Calendar not found");
+        if (!goal) throw new Error("Goal not found");
 
         const userToShareWith = await this.pb
             .collection("users")
@@ -48,31 +48,31 @@ export class CalendarService {
 
         if (!userToShareWith) throw new Error("User not found");
 
-        calendar.viewers.push(userToShareWith.id);
+        goal.viewers.push(userToShareWith.id);
 
-        await this.pb.collection("calendars").update(calendar.id, calendar);
+        await this.pb.collection("goals").update(goal.id, goal);
         await this.pb.collection("share_requests").delete(shareRequest.id);
 
-        return calendar;
+        return goal;
     }
 
     async get(id: string) {
-        return this.pb.collection("calendars").getOne<CalendarRecord>(id);
+        return this.pb.collection("goals").getOne<GoalRecord>(id);
     }
 
     async getList({ limit }: ListOptions) {
         return this.pb
-            .collection("calendars")
-            .getList<CalendarRecord>(0, limit);
+            .collection("goals")
+            .getList<GoalRecord>(0, limit);
     }
 
-    async update(id: string, calendar: Partial<Calendar>) {
+    async update(id: string, goal: Partial<Goal>) {
         return this.pb
-            .collection("calendars")
-            .update<CalendarRecord>(id, calendar);
+            .collection("goals")
+            .update<GoalRecord>(id, goal);
     }
 
     async delete(id: string) {
-        return this.pb.collection("calendars").delete(id);
+        return this.pb.collection("goals").delete(id);
     }
 }

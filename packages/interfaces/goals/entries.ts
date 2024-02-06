@@ -2,7 +2,7 @@ import { RecordModel } from 'pocketbase'
 
 export type Entry = {
     title: string,
-    calendar: string,
+    goal: string,
     text_content: string
 }
 
@@ -13,8 +13,8 @@ export const isEntry = (obj: unknown): obj is Entry => {
         && obj !== null
         && 'title' in obj
         && typeof obj.title === 'string'
-        && 'calendar' in obj
-        && typeof obj.calendar === 'string'
+        && 'goal' in obj
+        && typeof obj.goal === 'string'
         && 'text_content' in obj
         && typeof obj.text_content === 'string'
 }

@@ -1,16 +1,16 @@
 import Client from 'pocketbase'
-import { CalendarService, EntryService, EmailService } from "./src/services";
+import { GoalService, EntryService, EmailService } from "./src/services";
 
 declare global {
     namespace Express {
         interface Request {
             pb: Client
             adminPb: Client
-            calendarService: CalendarService
+            goalService: GoalService
             entryService: EntryService
             emailService: EmailService
             admin: {
-                calendarService: CalendarService
+                goalService: GoalService
                 entryService: EntryService
             }
         }

@@ -1,14 +1,14 @@
 import { RecordModel } from 'pocketbase'
 
-export type Calendar = {
+export type Goal = {
     title: string,
     owner: string,
     viewers: string[],
 }
 
-export type CalendarRecord = RecordModel & Calendar
+export type GoalRecord = RecordModel & Goal
 
-export const isCalendar = (obj: unknown): obj is Calendar => {
+export const isGoal = (obj: unknown): obj is Goal => {
     return typeof obj === 'object' 
         && obj !== null 
         && 'title' in obj 
